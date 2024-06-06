@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from typing import Any, Iterator
 from pathlib import Path
 
-import svgwrite  # type: ignore
-from svgwrite.container import Group  # type: ignore
+import svgwrite
+from svgwrite.container import Group
 
 
 @dataclass
@@ -14,8 +14,7 @@ class Point:
 
 
 class SVG:
-    # TODO: Add margin, either by translating each or translating a container <g>
-    def __init__(self, margin_w: int, margin_h: int, bg_color: str = "white") -> None:
+    def __init__(self, margin_w, margin_h, bg_color="white") -> None:
         self.svg = svgwrite.Drawing(style=f"background-color: {bg_color};")
         self.g = Group()
         self.g.translate(margin_w, margin_h)
@@ -25,19 +24,19 @@ class SVG:
         self.margin_w = margin_w
         self.margin_h = margin_h
 
-    def _update_size(self, point: Point) -> None:
+    def _update_size(self, point) -> None:
         self.width = max(self.width, point.x)
         self.height = max(self.height, point.y)
 
-    def _add(self, element: Any) -> Any:
+    def _add(self, element):
         self.g.add(element)
 
     def polygon(
         self,
-        points: list[Point],
-        color: str = "black",
-        fill: str = "white",
-        stroke_width: int = 2,
+        points,
+        color="black",
+        fill="white",
+        stroke_width=2,
     ) -> None:
         for point in points:
             self._update_size(point)
@@ -52,10 +51,10 @@ class SVG:
 
     def text(
         self,
-        origin: Point,
-        s: str,
-        size: int,
-        font_weight: str = "normal",
+        origin,
+        s,
+        size,
+        font_weight="normal",
         color="black",
     ) -> None:
         self._add(
@@ -71,7 +70,7 @@ class SVG:
             )
         )
 
-    def __str__(self) -> str:
+    def __str__(self):
         # It's ugly but works
         width = self.width + (2 * self.margin_w)
         height = self.height + (2 * self.margin_h)
@@ -86,10 +85,10 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}" if firstdayofmonth else f"{date.day}"
-    color = "black" if firstdayofmonth else "black"
-    fill = "white" if weekend else "white"
+    color = "white" if firstdayofmonth else "black"
+    fill = "#ddd" if weekend else "white"
     if firstdayofmonth:
-        fill = "white"
+        fill = "red"
 
     svg.polygon(
         [
@@ -100,10 +99,15 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty):
         ],
         fill=fill,
     )
-    svg.text(Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty), text, textsize, color=color)
+    svg.text(
+        Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
+        text,
+        textsize,
+        color=color,
+    )
 
 
-def get_days_in_year(year) -> Iterator[datetime.date]:
+def get_days_in_year(year):
     oneday = datetime.timedelta(days=1)
     first = datetime.date(year, 1, 1)
     last = datetime.date(year + 1, 1, 1) - oneday
@@ -119,8 +123,6 @@ def main():
     days = list(get_days_in_year(year))
 
     svg = SVG(10, 10)
-    # svg.line(Point(10, 10), Point(20, 20), 2)
-    # svg.text(Point(30, 30), "12/3", 40)
 
     max_x = 17
     w = 40
@@ -139,7 +141,9 @@ def main():
     svg.text(Point(((max_x + 1) * 40) / 2, textpaddingy), str(year), yearsize)
 
     for d in days:
-        draw_date(svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty)
+        draw_date(
+            svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty
+        )
         if x >= max_x:
             x = 0
             y += 1
