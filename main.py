@@ -154,13 +154,15 @@ def get_days_in_year(year) -> Iterator[datetime.date]:
 
 
 def main():
-    days = list(get_days_in_year(2024))
+    year = 2024
+    days = list(get_days_in_year(year))
     # for d in days:
     #    print(d)
 
     svg = SVG(1000, 1000)
     # svg.line(Point(10, 10), Point(20, 20), 2)
     # svg.text(Point(30, 30), "12/3", 40)
+    svg.text(Point(375, -40), str(year), 50)
 
     max_x = 17
     w = 40
