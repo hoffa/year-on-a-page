@@ -1,3 +1,9 @@
 # year-on-a-page
 
-![](render.svg)
+## Default
+
+![](renders/2024-default.svg)
+
+## Minimal
+
+![](renders/2024-minimal.svg)

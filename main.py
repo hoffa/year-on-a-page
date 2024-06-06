@@ -1,7 +1,6 @@
+import argparse
 import datetime
 from dataclasses import dataclass
-from typing import Any, Iterator
-from pathlib import Path
 
 import svgwrite
 from svgwrite.container import Group
@@ -81,14 +80,14 @@ class SVG:
         )
 
 
-def draw_date(svg, origin, w, h, date, textsize, textadjusty):
+def draw_date(svg, origin, w, h, date, textsize, textadjusty, weekendfill, firstdayfill, firstdaycolor):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}" if firstdayofmonth else f"{date.day}"
-    color = "white" if firstdayofmonth else "black"
-    fill = "#ddd" if weekend else "white"
+    color = firstdaycolor if firstdayofmonth else "black"
+    fill = weekendfill if weekend else "white"
     if firstdayofmonth:
-        fill = "red"
+        fill = firstdayfill
 
     svg.polygon(
         [
@@ -119,8 +118,14 @@ def get_days_in_year(year):
 
 
 def main():
-    year = 2024
-    days = list(get_days_in_year(year))
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--year', type=int, required=True)
+    parser.add_argument('--weekendfill', type=str, default="#ddd")
+    parser.add_argument('--firstdayfill', type=str, default="red")
+    parser.add_argument('--firstdaycolor', type=str, default="white")
+    args = parser.parse_args()
+
+    days = list(get_days_in_year(args.year))
 
     svg = SVG(10, 10)
 
@@ -138,11 +143,11 @@ def main():
     yearsize = 40
     tablepaddingy = textpaddingy + yearsize - 10
 
-    svg.text(Point(((max_x + 1) * 40) / 2, textpaddingy), str(year), yearsize)
+    svg.text(Point(((max_x + 1) * 40) / 2, textpaddingy), str(args.year), yearsize)
 
     for d in days:
         draw_date(
-            svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty
+            svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty, args.weekendfill, args.firstdayfill, args.firstdaycolor
         )
         if x >= max_x:
             x = 0
@@ -150,7 +155,7 @@ def main():
         else:
             x += 1
 
-    Path("render.svg").write_text(str(svg))
+    print(str(svg))
 
 
 if __name__ == "__main__":
