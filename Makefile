@@ -12,7 +12,6 @@ test:
 render:
 	.venv/bin/python main.py --year 2024 > renders/2024-default.svg
 	.venv/bin/python main.py --year 2024 --weekendfill white --firstdayfill white --firstdaycolor black > renders/2024-minimal.svg
-	.venv/bin/python main.py --year 2024 --weekendfill white --firstdayfill white --firstdaycolor black --firstdaystyle slash > renders/2024-minimal-slash.svg
 
 clean:
 	rm -r .venv
