@@ -51,7 +51,13 @@ class SVG:
             )
         )
 
-    def polygon(self, points: list[Point], color: str = "black", fill: str = "white", stroke_width: int = 2) -> None:
+    def polygon(
+        self,
+        points: list[Point],
+        color: str = "black",
+        fill: str = "white",
+        stroke_width: int = 2,
+    ) -> None:
         for point in points:
             self._update_size(point)
         self._add(
@@ -85,7 +91,12 @@ class SVG:
         self._add(shape)
 
     def text(
-        self, origin: Point, s: str, size: int, font_weight: str = "normal", color = "black"
+        self,
+        origin: Point,
+        s: str,
+        size: int,
+        font_weight: str = "normal",
+        color="black",
     ) -> None:
         self._add(
             self.svg.text(
@@ -110,16 +121,26 @@ class SVG:
             .replace('height="100%"', f'height="{int(height)}"')
         )
 
+
 def draw_date(svg, origin, w, h, date):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     print(firstdayofmonth, weekend)
-    text = f'{date.month}/{date.day}' if firstdayofmonth else f'{date.day}'
-    color = 'red' if firstdayofmonth else 'black'
-    fill = '#ddd' if weekend else 'white'
+    text = f"{date.month}/{date.day}" if firstdayofmonth else f"{date.day}"
+    color = "red" if firstdayofmonth else "black"
+    fill = "#ddd" if weekend else "white"
 
-    svg.polygon([origin, Point(origin.x + w, origin.y), Point(origin.x + w, origin.y + h), Point(origin.x, origin.y + h)], fill=fill)
-    svg.text(Point(origin.x + (w/2), origin.y + (h/2)), text, 20, color=color)
+    svg.polygon(
+        [
+            origin,
+            Point(origin.x + w, origin.y),
+            Point(origin.x + w, origin.y + h),
+            Point(origin.x, origin.y + h),
+        ],
+        fill=fill,
+    )
+    svg.text(Point(origin.x + (w / 2), origin.y + (h / 2)), text, 20, color=color)
+
 
 def get_days_in_year(year) -> Iterator[datetime.date]:
     oneday = datetime.timedelta(days=1)
@@ -134,12 +155,12 @@ def get_days_in_year(year) -> Iterator[datetime.date]:
 
 def main():
     days = list(get_days_in_year(2024))
-    #for d in days:
+    # for d in days:
     #    print(d)
 
     svg = SVG(1000, 1000)
-    #svg.line(Point(10, 10), Point(20, 20), 2)
-    #svg.text(Point(30, 30), "12/3", 40)
+    # svg.line(Point(10, 10), Point(20, 20), 2)
+    # svg.text(Point(30, 30), "12/3", 40)
 
     max_x = 17
     w = 40
@@ -155,7 +176,6 @@ def main():
             y += 1
         else:
             x += 1
-
 
     """
     draw_date(svg, Point(15, 15), 40, 40, days[0])
