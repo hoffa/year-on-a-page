@@ -103,6 +103,7 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, weekendfill, first
         text,
         textsize,
         color=color,
+        font_weight= 'bold' if weekend else 'normal'
     )
 
 
