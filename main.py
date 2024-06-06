@@ -18,8 +18,8 @@ class SVG:
         self.g = Group()
         self.g.translate(margin_w, margin_h)
         self.svg.add(self.g)
-        self.width: float = 0
-        self.height: float = 0
+        self.width = 0
+        self.height = 0
         self.margin_w = margin_w
         self.margin_h = margin_h
 
@@ -80,14 +80,12 @@ class SVG:
         )
 
 
-def draw_date(svg, origin, w, h, date, textsize, textadjusty, weekendfill, firstdayfill, firstdaycolor):
+def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
-    text = f"{date.day}" if firstdayofmonth else f"{date.day}"
-    color = firstdaycolor if firstdayofmonth else "black"
-    fill = weekendfill if weekend else "white"
-    if firstdayofmonth:
-        fill = firstdayfill
+    color = "white" if firstdayofmonth else "black"
+    fill = "black" if firstdayofmonth else "white"
+    font_weight = "bold" if weekend else "normal"
 
     svg.polygon(
         [
@@ -100,10 +98,10 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, weekendfill, first
     )
     svg.text(
         Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
-        text,
+        date.day,
         textsize,
         color=color,
-        font_weight= 'bold' if weekend else 'normal'
+        font_weight=font_weight,
     )
 
 
@@ -120,10 +118,7 @@ def get_days_in_year(year):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--year', type=int, required=True)
-    parser.add_argument('--weekendfill', type=str, default="#ddd")
-    parser.add_argument('--firstdayfill', type=str, default="red")
-    parser.add_argument('--firstdaycolor', type=str, default="white")
+    parser.add_argument("--year", type=int, required=True)
     args = parser.parse_args()
 
     days = list(get_days_in_year(args.year))
@@ -148,7 +143,7 @@ def main():
 
     for d in days:
         draw_date(
-            svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty, args.weekendfill, args.firstdayfill, args.firstdaycolor
+            svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty
         )
         if x >= max_x:
             x = 0
