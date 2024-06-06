@@ -4,8 +4,12 @@ View the entire year on a single page. Print it out and perhaps better appreciat
 
 ## Default
 
-![](renders/2024-default.svg)
+<p align="center">
+  <img src="renders/2024-default.svg" />
+</p>
 
 ## Minimal
 
-![](renders/2024-minimal.svg)
+<p align="center">
+  <img src="renders/2024-minimal.svg" />
+</p>
