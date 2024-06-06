@@ -30,6 +30,25 @@ class SVG:
     def _add(self, element):
         self.g.add(element)
 
+    def line(
+        self,
+        start,
+        end,
+        width,
+        color="black",
+    ) -> None:
+        self._update_size(start)
+        self._update_size(end)
+        self._add(
+            self.svg.line(
+                (start.x, start.y),
+                (end.x, end.y),
+                stroke_width=width,
+                stroke=color,
+                stroke_linecap="square",
+            )
+        )
+
     def polygon(
         self,
         points,
@@ -80,7 +99,19 @@ class SVG:
         )
 
 
-def draw_date(svg, origin, w, h, date, textsize, textadjusty, weekendfill, firstdayfill, firstdaycolor):
+def draw_date(
+    svg,
+    origin,
+    w,
+    h,
+    date,
+    textsize,
+    textadjusty,
+    weekendfill,
+    firstdayfill,
+    firstdaycolor,
+    firstdaystyle,
+):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}" if firstdayofmonth else f"{date.day}"
@@ -98,12 +129,31 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, weekendfill, first
         ],
         fill=fill,
     )
-    svg.text(
-        Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
-        text,
-        textsize,
-        color=color,
-    )
+    if firstdaystyle == "none" or not firstdayofmonth:
+        svg.text(
+            Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
+            text,
+            textsize,
+            color=color,
+        )
+    elif firstdaystyle == "slash":
+        svg.text(
+            Point(origin.x + (w / 3), origin.y + (h / 3) + textadjusty),
+            date.month,
+            0.75 * textsize,
+            color=color,
+        )
+        svg.text(
+            Point(origin.x + 2 * (w / 3), origin.y + 2 * (h / 3) + textadjusty),
+            date.day,
+            0.75 * textsize,
+            color=color,
+        )
+        svg.line(
+            Point(origin.x + (w / 3), origin.y + 2 * (h / 3)),
+            Point(origin.x + 2 * (w / 3), origin.y + (h / 3)),
+            1,
+        )
 
 
 def get_days_in_year(year):
@@ -119,10 +169,13 @@ def get_days_in_year(year):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--year', type=int, required=True)
-    parser.add_argument('--weekendfill', type=str, default="#ddd")
-    parser.add_argument('--firstdayfill', type=str, default="red")
-    parser.add_argument('--firstdaycolor', type=str, default="white")
+    parser.add_argument("--year", type=int, required=True)
+    parser.add_argument("--weekendfill", type=str, default="#ddd")
+    parser.add_argument("--firstdayfill", type=str, default="red")
+    parser.add_argument("--firstdaycolor", type=str, default="white")
+    parser.add_argument(
+        "--firstdaystyle", type=str, choices=("none", "slash"), default="none"
+    )
     args = parser.parse_args()
 
     days = list(get_days_in_year(args.year))
@@ -147,7 +200,17 @@ def main():
 
     for d in days:
         draw_date(
-            svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty, args.weekendfill, args.firstdayfill, args.firstdaycolor
+            svg,
+            Point(x * w, (y * h) + tablepaddingy),
+            w,
+            h,
+            d,
+            textsize,
+            textadjusty,
+            args.weekendfill,
+            args.firstdayfill,
+            args.firstdaycolor,
+            args.firstdaystyle,
         )
         if x >= max_x:
             x = 0
