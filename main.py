@@ -86,10 +86,10 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}" if firstdayofmonth else f"{date.day}"
-    color = "white" if firstdayofmonth else "black"
-    fill = "#eee" if weekend else "white"
+    color = "black" if firstdayofmonth else "black"
+    fill = "white" if weekend else "white"
     if firstdayofmonth:
-        fill = "red"
+        fill = "white"
 
     svg.polygon(
         [
