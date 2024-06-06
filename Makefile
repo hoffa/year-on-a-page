@@ -9,5 +9,8 @@ format:
 test:
 	.venv/bin/black --check .
 
+render:
+	.venv/bin/python main.py
+
 clean:
 	rm -r .venv
