@@ -141,7 +141,7 @@ def main():
 
     textpaddingy = 40
     yearsize = 40
-    tablepaddingy = textpaddingy + yearsize
+    tablepaddingy = textpaddingy + yearsize + 5
 
     svg.text(Point(((max_x + 1) * 40) / 2, textpaddingy), str(args.year), yearsize)
 
