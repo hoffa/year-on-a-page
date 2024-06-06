@@ -129,7 +129,7 @@ def main():
 
     svg = SVG(10, 10)
 
-    max_x = 17
+    max_x = 16
     w = 40
     h = 40
 
