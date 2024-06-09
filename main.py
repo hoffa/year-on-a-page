@@ -139,7 +139,12 @@ def main():
     yearsize = 40
     tablepaddingy = textpaddingy + yearsize + 15
 
-    svg.text(Point(((max_x + 1) * 40) / 2, textpaddingy), str(args.year), yearsize)
+    svg.text(
+        Point(((max_x + 1) * 40) / 2, textpaddingy),
+        str(args.year),
+        yearsize,
+        font_weight="bold",
+    )
 
     for d in days:
         draw_date(
