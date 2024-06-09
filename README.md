@@ -7,3 +7,7 @@ A view of the entire year on a single page.
 <p align="center">
   <img src="2024.svg" />
 </p>
+
+<p align="center">
+  <img src="2025.svg" />
+</p>
