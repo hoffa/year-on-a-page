@@ -86,7 +86,7 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, variant):
     text = f"{date.day}"
     if variant == "month":
         text = (
-            f"{date.strftime('%B')[0]}{date.day}" if firstdayofmonth else f"{date.day}"
+            f"{date.strftime('%B')[0]}" if firstdayofmonth else f"{date.day}"
         )
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
