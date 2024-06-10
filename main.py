@@ -85,9 +85,9 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, variant):
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}"
     if variant == "month":
-        text = (
-            f"{date.strftime('%B')[0]}" if firstdayofmonth else f"{date.day}"
-        )
+        text = f"{date.strftime('%B')[0]}" if firstdayofmonth else f"{date.day}"
+    elif variant == "monthkorean":
+        text = f"{date.strftime('%B')[0]}월" if firstdayofmonth else f"{date.day}"
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
@@ -125,7 +125,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--year", type=int, required=True)
     parser.add_argument(
-        "--variant", type=str, default="default", choices=("default", "month")
+        "--variant",
+        type=str,
+        default="default",
+        choices=("default", "month", "monthkorean"),
     )
     args = parser.parse_args()
 
