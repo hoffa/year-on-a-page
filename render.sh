@@ -3,6 +3,8 @@ set -eux
 
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python main.py --year 2024 > 2024.svg
-.venv/bin/python main.py --year 2025 > 2025.svg
-.venv/bin/python main.py --year 2026 > 2026.svg
+for year in 2024 2025 2026; do
+    for variant in default month; do
+        .venv/bin/python main.py --year "$year" --variant "$variant" > "renders/$year-$variant.svg"
+    done
+done

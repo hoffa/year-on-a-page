@@ -2,12 +2,12 @@
 
 A view of the entire year on a single page.
 
-[Print it out](https://raw.githubusercontent.com/hoffa/year-on-a-page/main/2024.svg) and follow along to better appreciate the flow of time.
+Print it out and follow along to better appreciate the flow of time.
 
 <p align="center">
-  <img src="2024.svg" />
+  <img src="renders/2024-default.svg" />
 </p>
 
 <p align="center">
-  <img src="2025.svg" />
+  <img src="renders/2025-default.svg" />
 </p>

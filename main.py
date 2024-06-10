@@ -80,9 +80,14 @@ class SVG:
         )
 
 
-def draw_date(svg, origin, w, h, date, textsize, textadjusty):
+def draw_date(svg, origin, w, h, date, textsize, textadjusty, variant):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
+    text = f"{date.day}"
+    if variant == "month":
+        text = (
+            f"{date.strftime('%B')[0]}{date.day}" if firstdayofmonth else f"{date.day}"
+        )
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
@@ -98,7 +103,7 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     )
     svg.text(
         Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
-        date.day,
+        text,
         textsize,
         color=color,
         font_weight=font_weight,
@@ -119,6 +124,9 @@ def get_days_in_year(year):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--year", type=int, required=True)
+    parser.add_argument(
+        "--variant", type=str, default="default", choices=("default", "month")
+    )
     args = parser.parse_args()
 
     days = list(get_days_in_year(args.year))
@@ -148,7 +156,14 @@ def main():
 
     for d in days:
         draw_date(
-            svg, Point(x * w, (y * h) + tablepaddingy), w, h, d, textsize, textadjusty
+            svg,
+            Point(x * w, (y * h) + tablepaddingy),
+            w,
+            h,
+            d,
+            textsize,
+            textadjusty,
+            args.variant,
         )
         if x >= max_x:
             x = 0
