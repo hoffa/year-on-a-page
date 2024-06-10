@@ -87,7 +87,7 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, variant):
     if variant == "month":
         text = f"{date.strftime('%B')[0]}" if firstdayofmonth else f"{date.day}"
     elif variant == "monthkorean":
-        text = f"{date.strftime('%B')[0]}월" if firstdayofmonth else f"{date.day}"
+        text = f"{date.month}월" if firstdayofmonth else f"{date.day}"
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
