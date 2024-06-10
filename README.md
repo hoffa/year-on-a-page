@@ -13,3 +13,7 @@ A view of the entire year on a single page.
 <p align="center">
   <img src="renders/2024-month.svg" />
 </p>
+
+<p align="center">
+  <img src="renders/2024-monthkorean.svg" />
+</p>
