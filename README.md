@@ -2,7 +2,7 @@
 
 A view of the entire year on a single page.
 
-[Print it out](renders/2024-default.svg) and follow along to better appreciate the flow of time.
+Print it out and follow along to better appreciate the flow of time.
 
 <p align="center">
   <img src="renders/2024-default.svg" />
