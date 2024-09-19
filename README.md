@@ -8,6 +8,10 @@ Print it out and follow along to better appreciate the flow of time.
   <img src="renders/2024-default.svg" />
 </p>
 
+<p align="center">
+  <img src="renders/2025-default.svg" />
+</p>
+
 <details>
 <summary>Alternative styles</summary>
 
