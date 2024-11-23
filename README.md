@@ -12,11 +12,11 @@ Print it out and follow along to better appreciate the flow of time.
 <summary>Alternative styles</summary>
 
 <p align="center">
-  <img src="renders/2024-month.svg" />
+  <img src="renders/2025-month.svg" />
 </p>
 
 <p align="center">
-  <img src="renders/2024-monthkorean.svg" />
+  <img src="renders/2025-monthkorean.svg" />
 </p>
 
 </details>
