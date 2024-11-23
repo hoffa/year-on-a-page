@@ -8,9 +8,6 @@ Print it out and follow along to better appreciate the flow of time.
   <img src="renders/2025-default.svg" />
 </p>
 
-<details>
-<summary>Alternative styles</summary>
-
 <p align="center">
   <img src="renders/2025-month.svg" />
 </p>
@@ -22,5 +19,3 @@ Print it out and follow along to better appreciate the flow of time.
 <p align="center">
   <img src="renders/2025-emoji.svg" />
 </p>
-
-</details>
