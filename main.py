@@ -80,6 +80,22 @@ class SVG:
         )
 
 
+MONTH_TO_EMOJI = {
+    1: "❄️",
+    2: "❤️",
+    3: "🌱",
+    4: "🐣",
+    5: "🌸",
+    6: "🌞",
+    7: "🏖️",
+    8: "🍉",
+    9: "🍁",
+    10: "🎃",
+    11: "🍂",
+    12: "🎄",
+}
+
+
 def draw_date(svg, origin, w, h, date, textsize, textadjusty, variant):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
@@ -88,6 +104,8 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, variant):
         text = f"{date.strftime('%B')[0]}" if firstdayofmonth else f"{date.day}"
     elif variant == "monthkorean":
         text = f"{date.month}월" if firstdayofmonth else f"{date.day}"
+    elif variant == "emoji":
+        text = MONTH_TO_EMOJI[date.month] if firstdayofmonth else f"{date.day}"
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
@@ -128,7 +146,7 @@ def main():
         "--variant",
         type=str,
         default="default",
-        choices=("default", "month", "monthkorean"),
+        choices=("default", "month", "monthkorean", "emoji"),
     )
     args = parser.parse_args()
 
