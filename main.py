@@ -14,7 +14,7 @@ class Point:
 
 class SVG:
     def __init__(self, margin_w, margin_h, bg_color="white") -> None:
-        self.svg = svgwrite.Drawing(style=f"background-color: {bg_color};")
+        self.svg = svgwrite.Drawing(style=f"background-color: {bg_color}; font-family: sans-serif;")
         self.g = Group()
         self.g.translate(margin_w, margin_h)
         self.svg.add(self.g)
@@ -61,7 +61,6 @@ class SVG:
                 s,
                 insert=(origin.x, origin.y),
                 alignment_baseline="middle",
-                font_family="sans-serif",
                 font_size=f"{size}px",
                 text_anchor="middle",
                 font_weight=font_weight,
