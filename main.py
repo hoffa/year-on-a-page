@@ -89,16 +89,15 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
 
-    if firstdayofmonth:
-        svg.polygon(
-            [
-                origin,
-                Point(origin.x + w, origin.y),
-                Point(origin.x + w, origin.y + h),
-                Point(origin.x, origin.y + h),
-            ],
-            fill=fill,
-        )
+    svg.polygon(
+        [
+            origin,
+            Point(origin.x + w, origin.y),
+            Point(origin.x + w, origin.y + h),
+            Point(origin.x, origin.y + h),
+        ],
+        fill=fill,
+    )
     svg.text(
         Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
         text,
