@@ -1,6 +1,6 @@
 # year-on-a-page
 
-A view of the entire year on a single page.
+The year on a single page.
 
 [Print out the PDF](renders/pdf/2025-default.pdf) and follow along to better appreciate the flow of time.
 
