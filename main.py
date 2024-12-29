@@ -89,22 +89,65 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
 
-    svg.polygon(
-        [
-            origin,
-            Point(origin.x + w, origin.y),
-            Point(origin.x + w, origin.y + h),
-            Point(origin.x, origin.y + h),
-        ],
-        fill=fill,
-    )
-    svg.text(
-        Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
-        text,
-        textsize,
-        color=color,
-        font_weight=font_weight,
-    )
+    if firstdayofmonth:
+        font_weight = "bold"
+        svg.polygon(
+            [
+                origin,
+                Point(origin.x + w, origin.y),
+                Point(origin.x + w, origin.y + h),
+                Point(origin.x, origin.y + h),
+            ],
+            fill=fill,
+        )
+        svg.polygon(
+            [
+                Point(origin.x + (w * (1 / 3)), origin.y + (h * (2 / 3))),
+                Point(origin.x + (w * (2 / 3)), origin.y + (h * (1 / 3))),
+            ],
+            color=color,
+            stroke_width=1.5,
+        )
+        svg.text(
+            Point(origin.x + (w * (1 / 3)), origin.y + (h * (1 / 3)) + textadjusty),
+            date.month,
+            textsize / 1.5,
+            color=color,
+            font_weight=font_weight,
+        )
+        svg.text(
+            Point(origin.x + (w * (2 / 3)), origin.y + (h * (2 / 3)) + textadjusty),
+            date.day,
+            textsize / 1.5,
+            color=color,
+            font_weight=font_weight,
+        )
+        """
+        svg.text(
+            Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
+            text,
+            textsize,
+            color=color,
+            font_weight=font_weight,
+        )
+        """
+    else:
+        svg.polygon(
+            [
+                origin,
+                Point(origin.x + w, origin.y),
+                Point(origin.x + w, origin.y + h),
+                Point(origin.x, origin.y + h),
+            ],
+            fill=fill,
+        )
+        svg.text(
+            Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
+            text,
+            textsize,
+            color=color,
+            font_weight=font_weight,
+        )
 
 
 def get_days_in_year(year):
