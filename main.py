@@ -14,7 +14,9 @@ class Point:
 
 class SVG:
     def __init__(self, margin_w, margin_h, bg_color="white") -> None:
-        self.svg = svgwrite.Drawing(style=f"background-color: {bg_color}; font-family: sans-serif;")
+        self.svg = svgwrite.Drawing(
+            style=f"background-color: {bg_color}; font-family: sans-serif;"
+        )
         self.g = Group()
         self.g.translate(margin_w, margin_h)
         self.svg.add(self.g)
@@ -79,32 +81,10 @@ class SVG:
         )
 
 
-MONTH_TO_EMOJI = {
-    1: "❄️",
-    2: "❤️",
-    3: "🌱",
-    4: "🐣",
-    5: "🌸",
-    6: "🌞",
-    7: "🏖️",
-    8: "🍉",
-    9: "🍁",
-    10: "🎃",
-    11: "🍂",
-    12: "🎄",
-}
-
-
-def draw_date(svg, origin, w, h, date, textsize, textadjusty, variant):
+def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}"
-    if variant == "month":
-        text = f"{date.strftime('%B')[0]}" if firstdayofmonth else f"{date.day}"
-    elif variant == "monthkorean":
-        text = f"{date.month}월" if firstdayofmonth else f"{date.day}"
-    elif variant == "emoji":
-        text = MONTH_TO_EMOJI[date.month] if firstdayofmonth else f"{date.day}"
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
@@ -141,12 +121,6 @@ def get_days_in_year(year):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--year", type=int, required=True)
-    parser.add_argument(
-        "--variant",
-        type=str,
-        default="default",
-        choices=("default", "month", "monthkorean", "emoji"),
-    )
     args = parser.parse_args()
 
     days = list(get_days_in_year(args.year))
@@ -183,7 +157,6 @@ def main():
             d,
             textsize,
             textadjusty,
-            args.variant,
         )
         if x >= max_x:
             x = 0
