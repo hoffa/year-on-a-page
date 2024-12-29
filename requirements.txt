@@ -1,2 +1,2 @@
 svgwrite==1.4.3
-cairosvg==2.5.2
+cairosvg==2.7.0
