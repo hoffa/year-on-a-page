@@ -18,3 +18,5 @@ jobs:
           git add .
           git commit -m "Update latest" || true
           git push
+        env:
+          GH_TOKEN: ${{ github.token }}
