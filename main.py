@@ -200,7 +200,7 @@ def main():
     h = 40
 
     textsize = w * 0.45
-    textadjusty = 1
+    textadjusty = 1.5
 
     x = 0
     y = 0
