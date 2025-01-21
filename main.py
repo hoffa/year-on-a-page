@@ -95,14 +95,14 @@ class SVG:
         )
 
 
-def draw_date(svg, origin, w, h, date, textsize, textadjusty):
+def draw_date(svg, origin, w, h, date, textsize, textadjusty, highlight_past):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}"
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
-    is_in_past = date < datetime.datetime.now().date()
+    is_in_past = highlight_past and date < datetime.datetime.now().date()
 
     if firstdayofmonth:
         svg.polygon(
@@ -187,6 +187,7 @@ def get_days_in_year(year):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--highlight-past', action='store_true')
     parser.add_argument("--year", type=int, required=True)
     args = parser.parse_args()
 
@@ -224,6 +225,7 @@ def main():
             d,
             textsize,
             textadjusty,
+            args.highlight_past,
         )
         if x >= max_x:
             x = 0
