@@ -4,8 +4,8 @@ The entire year on a single page.
 
 The year on a single page.
 
-[Print out the PDF](renders/pdf/2025.pdf) and follow along to better appreciate the flow of time.
+[Print out the PDF](renders/pdf/2100.pdf) and follow along to better appreciate the flow of time.
 
 <p align="center">
-  <a href="renders/svg/2025.svg"><img src="renders/svg/2025.svg" /></a>
+  <a href="renders/svg/2100.svg"><img src="renders/svg/2100.svg" /></a>
 </p>
