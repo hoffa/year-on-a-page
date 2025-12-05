@@ -95,14 +95,13 @@ class SVG:
         )
 
 
-def draw_date(svg, origin, w, h, date, textsize, textadjusty, highlight_past):
+def draw_date(svg, origin, w, h, date, textsize, textadjusty):
     firstdayofmonth = date.day == 1
     weekend = date.weekday() in (5, 6)
     text = f"{date.day}"
     color = "white" if firstdayofmonth else "black"
     fill = "black" if firstdayofmonth else "white"
     font_weight = "bold" if weekend else "normal"
-    is_in_past = highlight_past and date < datetime.datetime.now().date()
 
     if firstdayofmonth:
         svg.polygon(
@@ -114,30 +113,13 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, highlight_past):
             ],
             fill=fill,
         )
-        if is_in_past:
-            svg.circle(
-                Point(
-                    origin.x + (w * (1 / 2)),
-                    origin.y + (h * (1 / 2)),
-                ),
-                w / 2.5,
-                fill="red",
-            )
-            svg.text(
-                Point(origin.x + (w * (1 / 2)), origin.y + (h * (1 / 2)) + textadjusty),
-                date.month,
-                textsize / 1.125,
-                color="black",
-                font_weight="bold",
-            )
-        else:
-            svg.text(
-                Point(origin.x + (w * (1 / 2)), origin.y + (h * (1 / 2)) + textadjusty),
-                date.month,
-                textsize / 1.125,
-                color=color,
-                font_weight="bold",
-            )
+        svg.text(
+            Point(origin.x + (w * (1 / 2)), origin.y + (h * (1 / 2)) + textadjusty),
+            date.month,
+            textsize / 1.125,
+            color=color,
+            font_weight="bold",
+        )
     else:
         svg.polygon(
             [
@@ -148,30 +130,13 @@ def draw_date(svg, origin, w, h, date, textsize, textadjusty, highlight_past):
             ],
             fill=fill,
         )
-        if is_in_past:
-            svg.circle(
-                Point(
-                    origin.x + (w * (1 / 2)),
-                    origin.y + (h * (1 / 2)),
-                ),
-                w / 2.5,
-                fill="red",
-            )
-            svg.text(
-                Point(origin.x + (w * (1 / 2)), origin.y + (h * (1 / 2)) + textadjusty),
-                text,
-                textsize / 1.125,
-                color="black",
-                font_weight=font_weight,
-            )
-        else:
-            svg.text(
-                Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
-                text,
-                textsize,
-                color=color,
-                font_weight=font_weight,
-            )
+        svg.text(
+            Point(origin.x + (w / 2), origin.y + (h / 2) + textadjusty),
+            text,
+            textsize,
+            color=color,
+            font_weight=font_weight,
+        )
 
 
 def get_days_in_year(year):
@@ -187,7 +152,6 @@ def get_days_in_year(year):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--highlight-past', action='store_true')
     parser.add_argument("--year", type=int, required=True)
     args = parser.parse_args()
 
@@ -225,7 +189,6 @@ def main():
             d,
             textsize,
             textadjusty,
-            args.highlight_past,
         )
         if x >= max_x:
             x = 0
